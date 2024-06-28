@@ -50,8 +50,8 @@ class UrbanRoutesPage:
     close_button_payment_methods = (By.CSS_SELECTOR, '#root > div > div.payment-picker.open > div.modal > div.section.active > button')
     message_field = (By.CSS_SELECTOR, '#comment')
     order_a_blanket_and_tissues = (By.XPATH, '//span[@class="slider round"]')
-    orders_ice_creams (By.CSS_SELECTOR,'#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.form > div.reqs.open > div.reqs-body > div.r.r-type-group > div > div.r-group-items > div:nth-child(1) > div > div.r-counter > div > div.counter-value')
-    modal_to_look_for_a_taxi (By.XPATH, '//span[@class="smart-button-secondary"]')
+    ice_creams (By.CSS_SELECTOR,'#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.form > div.reqs.open > div.reqs-body > div.r.r-type-group > div > div.r-group-items > div:nth-child(1) > div > div.r-counter > div > div.counter-value')
+    search_for_a_taxi (By.XPATH, '//span[@class="smart-button-secondary"]')
 
 
     def __init__(self, driver):
@@ -106,10 +106,10 @@ class UrbanRoutesPage:
 
     def request_ice_creams(self, quantity=2):
         for _ in range(quantity):
-            self.driver.find_element(*self.orders_ice_creams).doubleClick()
+            self.driver.find_element(*self.ice_creams).doubleClick()
 
     def search_taxi(self):
-        self.driver.find_element(*self.modal_to_look_for_a_taxi).click()
+        self.driver.find_element(*self.search_for_a_taxi).click()
 
     def get_from(self):
         return self.driver.find_element(*self.from_field).get_property('value')
