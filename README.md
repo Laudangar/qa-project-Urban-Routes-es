@@ -15,6 +15,7 @@ INSTALACIONES
 2. Descarga de Pytest desde PyCharm
 3. Descarga de Git
 4. Descarga de paquete selenium, desde el comando pip install
+5. Descarga de paquete request, desde el comando pip install
 5. Clonar el repositorio
 6. Instalación de ChromeDriver
 
