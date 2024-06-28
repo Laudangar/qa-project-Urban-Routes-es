@@ -20,7 +20,8 @@ INSTALACIONES
 
 CONTENIDO 
 
-El proyecto contine tres carpetas, el las cuales se encuentra:
+El proyecto contine 4 carpetas, el las cuales se encuentra:
 1. data.py: Dentro de este se almacena la información que se enviara en las solicitudes, así mismo las configuraciones para el proyecto en donde se almacenan la ruta al servidor.
 2. main.py: Dentro de este se encuentra las pruebas para realizar el pedido del taxi.
 3. README.md: El cual guarda la descripción del proyecto.
+4. gitignore: En este se guardan archivos para que Git los descarte
