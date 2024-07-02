@@ -21,8 +21,10 @@ INSTALACIONES
 
 CONTENIDO 
 
-El proyecto contine 4 carpetas, el las cuales se encuentra:
+El proyecto contine 6 carpetas, el las cuales se encuentra:
 1. data.py: Dentro de este se almacena la información que se enviara en las solicitudes, así mismo las configuraciones para el proyecto en donde se almacenan la ruta al servidor.
 2. main.py: Dentro de este se encuentra las pruebas para realizar el pedido del taxi.
-3. README.md: El cual guarda la descripción del proyecto.
-4. gitignore: En este se guardan archivos para que Git los descarte
+3. Pages.py: Dentro de esta se encuentran los localizadores de las funciones relacionadas con las distintas páginas de tu aplicación
+4. helpers.py: En esta se encuentra la funcionalidad retrieve_phone_code, el cual devuelve un número de confirmación de teléfono
+5. README.md: El cual guarda la descripción del proyecto.
+6. gitignore: En este se guardan archivos para que Git los descarte
