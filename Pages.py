@@ -2,31 +2,29 @@ from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-
 import helpers
-from helpers import retrieve_phone_code
+
 
 
 class UrbanRoutesPage:
-    home_url = 'https://cnt-7bfe5a33-d796-4d82-87af-589c8aa0e6a3.containerhub.tripleten-services.com?lng=es'
-    from_field = (By.CSS_SELECTOR, '#from')
-    to_field = (By.CSS_SELECTOR, '#to')
-    order_a_taxi = (By.CLASS_NAME, "button.round")
+    from_field = (By.XPATH, '//input[@id="from"]')
+    to_field = (By.XPATH, '//input[@id="to"]')
+    order_a_taxi = (By.XPATH, '//button[@class="button round"]')
     comfort_tariff = (By.XPATH, '//div[text() = "10"]')
     select_phone_number = (By.XPATH, '//div[text() = "Número de teléfono"]')
-    stuffed_phone_number = (By.CSS_SELECTOR, '#phone')
+    stuffed_phone_number = (By.XPATH, '//label[contains(@for,"phone")]')
     next_phone_button = (By.XPATH, '//button[text() = "Siguiente"]')
-    space_enter_the_code = (By. CSS_SELECTOR, '#code.input')
+    space_enter_the_code = (By.XPATH, '//label[contains(@for,"code")]')
     button_confirmation_phone = (By.XPATH, '//button[text() = "Confirmar"]')
-    add_payment_method = (By.CSS_SELECTOR, '.pp-text')
-    select_the_card_payment_method = (By.CSS_SELECTOR, '.pp-plus-container')
-    add_a_credit_card = (By.CSS_SELECTOR, '#number')
-    enter_code_card = (By.CSS_SELECTOR, '#code.card-input')
+    add_payment_method = (By.XPATH, '//div[contains(@class,"pp-text")]')
+    select_the_card_payment_method = (By.XPATH, '//img[contains(@class,"pp-plus")]')
+    add_a_credit_card = (By.XPATH, '//input[contains(@id,"number")]')
+    enter_code_card = (By.XPATH, '//input[contains(@name,"code")]')
     add_card_button = (By.XPATH, '//button[text() = "Agregar"]')
-    close_button_payment_methods = (By.CSS_SELECTOR, '#root > div > div.payment-picker.open > div.modal > div.section.active > button')
-    message_field = (By.CSS_SELECTOR, '#comment')
-    order_a_blanket_and_tissues = (By.CSS_SELECTOR, '#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.form > div.reqs.open > div.reqs-body > div:nth-child(1) > div > div.r-sw > div > span')
-    ice_creams = (By.CSS_SELECTOR,'#root > div > div.workflow > div.workflow-subcontainer > div.tariff-picker.shown > div.form > div.reqs.open > div.reqs-body > div.r.r-type-group > div > div.r-group-items > div:nth-child(1) > div > div.r-counter > div > div.counter-value')
+    close_button_payment_methods = (By.XPATH, '(//button[@class="close-button section-close"])[3]')
+    message_field = (By.XPATH, '//label[@for="comment"][contains(.,"Mensaje para el conductor...")]')
+    order_a_blanket_and_tissues = (By.XPATH, '(//span[@class="slider round"])[1]')
+    ice_creams = (By.XPATH, '(//div[contains(.,"0")])[30]')
     search_for_a_taxi = (By.XPATH, '//span[@class="smart-button-secondary"]')
 
 
@@ -34,7 +32,8 @@ class UrbanRoutesPage:
         self.driver = driver
 
     def wait_for_load_home_page(self):
-        WebDriverWait(self.driver, 5).until(EC.expected_conditions.visibility_of_element())
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(self.from_field))
 
 
     def select_from(self):

@@ -1,5 +1,6 @@
 import data
 from selenium import webdriver
+import helpers
 from Pages import UrbanRoutesPage
 
 
@@ -14,7 +15,7 @@ class TestUrbanRoutes:
         chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
         cls.driver = webdriver.Chrome(options=chrome_options)
         cls.driver.maximize_window()
-        cls.home = (UrbanRoutesPage.home_url)
+        cls.home = data.urban_routes_url
         cls.driver.get(cls.home)
 
 
@@ -45,9 +46,11 @@ class TestUrbanRoutes:
 
     def test_set_phone_number(self):
         phone_number = data.phone_number
+        code_phone = helpers.retrieve_phone_code
         self.routes_page.set_phone_number(phone_number)
+        self.routes_page.code_phone_number()
         assert self.routes_page.get_phone_number() == phone_number
-        assert self.routes_page.get_code_phone
+        assert self.routes_page.get_code_phone() == code_phone
 
 
 
