@@ -1,7 +1,7 @@
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.wait import WebDriverWait
 import helpers
 
 
@@ -9,7 +9,7 @@ import helpers
 class UrbanRoutesPage:
     from_field = (By.XPATH, '//input[@id="from"]')
     to_field = (By.XPATH, '//input[@id="to"]')
-    order_a_taxi = (By.XPATH, '//button[@class="button round"]')
+    order_a_taxi = (By.XPATH, '//button[contains(@class,"button round")]')
     comfort_tariff = (By.XPATH, '//div[text() = "10"]')
     select_phone_number = (By.XPATH, '//div[text() = "Número de teléfono"]')
     stuffed_phone_number = (By.XPATH, '//label[contains(@for,"phone")]')
@@ -31,21 +31,12 @@ class UrbanRoutesPage:
     def __init__(self, driver):
         self.driver = driver
 
-    def wait_for_load_home_page(self):
-        WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located(self.from_field))
-
-
-    def select_from(self):
-        self.driver.find_element(*self.from_field).click()
+    def wait_for_element(self, locator):
+        return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
 
 
     def set_from(self, address_from):
         self.driver.find_element(*self.from_field).send_keys(address_from)
-
-
-    def select_to(self):
-        self.driver.find_element(*self.to_field).click()
 
 
     def set_to(self, address_to):
