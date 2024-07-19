@@ -11,11 +11,13 @@ class UrbanRoutesPage:
     to_field = (By.XPATH, '//input[@id="to"]')
     order_a_taxi = (By.XPATH, "//button[@class='button round' and text()='Pedir un taxi']")
     comfort_tariff = (By.XPATH, '//div[text() = "10"]')
-    select_phone_number = (By.XPATH, '//div[text() = "Número de teléfono"]')
-    stuffed_phone_number = (By.XPATH, '//label[contains(@for,"phone")]')
-    next_phone_button = (By.XPATH, '//button[text() = "Siguiente"]')
-    space_enter_the_code = (By.XPATH, '//label[contains(@for,"code")]')
-    button_confirmation_phone = (By.XPATH, '//button[text() = "Confirmar"]')
+    add_number_button = (By.XPATH, '//div[@class="np-button"]') #
+    add_number_text = (By.XPATH, '//div[@class="np-text"]')
+    input_number = (By.XPATH, '//div[@class="np-input"]/div')
+    write_number = (By.ID, 'phone')
+    number_button = (By.CLASS_NAME, "button.full")
+    code_phone_field = (By.ID, 'code')
+    confirmation_code_button = (By.CSS_SELECTOR, '.section.active>form>.buttons>:nth-child(1)') #
     add_payment_method = (By.XPATH, '//div[contains(@class,"pp-text")]')
     select_the_card_payment_method = (By.XPATH, '//img[contains(@class,"pp-plus")]')
     add_a_credit_card = (By.XPATH, '//input[contains(@id,"number")]')
@@ -31,6 +33,8 @@ class UrbanRoutesPage:
     def __init__(self, driver):
         self.driver = driver
 
+
+    #Seleccionar la ruta
     def wait_for_element(self, locator):
         return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
 
@@ -51,38 +55,59 @@ class UrbanRoutesPage:
         return self.driver.find_element(*self.to_field).get_property('value')
 
 
+    # Seleccionar ordenar un taxi
     def set_order_a_taxi(self):
-        self.wait_for_element(*self.order_a_taxi)
+        self.wait_for_element(self.order_a_taxi)
         order_button = self.driver.find_element(*self.order_a_taxi)
         order_button.click()
 
 
+    # Selección de la tarifa
     def select_comfort_tariff(self):
-        self.driver.find_element(*self.comfort_tariff).click()
-        self.driver.find_element(*self.comfort_tariff).is_selected()
+        element = self.wait_for_element(self.comfort_tariff)
+        element.click()
+        assert element.is_selected()
 
 
-    def set_phone_number(self, phone_number):
-        self.driver.find_element(*self.select_phone_number).click()
-        self.driver.find_element(*self.stuffed_phone_number).click()
-        self.driver.find_element(*self.stuffed_phone_number).send_keys(phone_number)
-        self.driver.find_element(*self.next_phone_button).click()
-
-    def code_phone_number(self):
-        self.driver.find_element(*self.space_enter_the_code).click()
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.space_enter_the_code)
-                                             ).click()
-        phone_code = helpers.retrieve_phone_code(driver=self.driver)
-        self.driver.find_element(*self.space_enter_the_code).send_keys(phone_code)
-        self.driver.find_element(*self.button_confirmation_phone).click()
-
-    def get_phone_number(self):
-        return self.driver.find_element(*self.stuffed_phone_number).get_property('value')
-
-    def get_code_phone(self):
-        return self.driver.find_element(*self.space_enter_the_code).get_property('value')
+    # Llenado de numero de telefono
+    def click_add_number(self):
+        self.driver.find_element(*self.add_number_button).click()
 
 
+    def click_input_number_field(self):
+        self.driver.find_element(*self.input_number).click()
+
+
+    def set_number_input(self, number):
+        self.driver.find_element(*self.write_number).send_keys(number)
+
+
+    def click_number_button(self):
+        self.driver.find_element(*self.number_button).click()
+
+
+    def set_code_phone(self):
+        self.driver.find_element(*self.code_phone_field).send_keys(helpers.retrieve_phone_code(self.driver))
+
+
+    def click_confirmation_code_button(self):
+        self.driver.find_element(*self.confirmation_code_button).click()
+
+
+    def get_add_number_text(self):
+        return self.driver.find_element(*self.add_number_text).text
+
+
+    def set_phone_number(self, number):
+        self.click_add_number()
+        self.click_input_number_field()
+        self.set_number_input(number)
+        self.click_number_button()
+        self.set_code_phone()
+        self.click_confirmation_code_button()
+
+
+    # Selección del metodo de pago
     def add_payments_method(self):
         self.driver.find_element(*self.add_payment_method).click()
 

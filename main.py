@@ -27,15 +27,15 @@ class TestUrbanRoutes:
         time.sleep(2)
         routes_page.set_from(address_from)
         routes_page.set_to(address_to)
-        #assert routes_page.get_from() == address_from
-        #assert routes_page.get_to() == address_to
+        assert routes_page.get_from() == address_from
+        assert routes_page.get_to() == address_to
         #time.sleep(2)
 
 
     def test_set_order_a_taxi(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.set_order_a_taxi()
-        #assert routes_page.set_order_a_taxi()
+        assert routes_page.set_order_a_taxi()
 
 
     def test_select_comfort_tariff(self):
@@ -47,11 +47,8 @@ class TestUrbanRoutes:
     def test_set_phone_number(self):
         routes_page = UrbanRoutesPage(self.driver)
         phone_number = data.phone_number
-        code_phone = helpers.retrieve_phone_code
         routes_page.set_phone_number(phone_number)
-        routes_page.code_phone_number()
-        assert routes_page.get_phone_number() == phone_number
-        assert routes_page.get_code_phone() == code_phone
+        assert routes_page.get_add_number_text() == phone_number
 
 
 
