@@ -17,11 +17,12 @@ class UrbanRoutesPage:
     write_number = (By.ID, 'phone')
     number_button = (By.CLASS_NAME, "button.full")
     code_phone_field = (By.ID, 'code')
-    confirmation_code_button = (By.CSS_SELECTOR, '.section.active>form>.buttons>:nth-child(1)') #
+    confirmation_code_button = (By.CSS_SELECTOR, '.section.active>form>.buttons>:nth-child(1)')
     add_payment_method = (By.XPATH, '//div[contains(@class,"pp-text")]')
     select_the_card_payment_method = (By.XPATH, '//img[contains(@class,"pp-plus")]')
     add_a_credit_card = (By.XPATH, '//input[contains(@id,"number")]')
     enter_code_card = (By.XPATH, '//input[contains(@name,"code")]')
+    space_between_code_and_add_button = (By.XPATH, '//div[contains(@class,"card-wrapper")]')
     add_card_button = (By.XPATH, '//button[text() = "Agregar"]')
     close_button_payment_methods = (By.XPATH, '(//button[@class="close-button section-close"])[3]')
     message_field = (By.XPATH, '//label[@for="comment"][contains(.,"Mensaje para el conductor...")]')
@@ -34,7 +35,7 @@ class UrbanRoutesPage:
         self.driver = driver
 
 
-    #Seleccionar la ruta
+    # Seleccionar la ruta
     def wait_for_element(self, locator):
         return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
 
@@ -119,11 +120,11 @@ class UrbanRoutesPage:
     def add_credit_card(self, card_number, card_code):
         self.driver.find_element(*self.add_a_credit_card).send_keys(card_number)
         self.driver.find_element(*self.enter_code_card)
-        card_code.send_keys(card_code)
-        card_code.send_keys(Keys.TAB)
+        self.driver.find_element(*self.enter_code_card).send_keys(card_code)
+        self.driver.find_element(*self.space_between_code_and_add_button).send_keys(Keys.TAB)
         self.driver.find_element(*self.add_card_button).click()
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(self.close_button_payment_methods)
-        ).click()
+                                             ).click()
         self.driver.find_element(*self.close_button_payment_methods).click()
 
 
