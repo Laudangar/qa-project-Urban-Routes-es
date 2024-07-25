@@ -29,7 +29,6 @@ class TestUrbanRoutes:
         routes_page.set_to(address_to)
         assert routes_page.get_from() == address_from
         assert routes_page.get_to() == address_to
-        #time.sleep(2)
 
 
     def test_set_order_a_taxi(self):
@@ -49,7 +48,6 @@ class TestUrbanRoutes:
         phone_number = data.phone_number
         routes_page.set_phone_number(phone_number)
         assert routes_page.get_add_number_text() == phone_number
-
 
 
     def test_add_payment_method(self):
@@ -73,26 +71,35 @@ class TestUrbanRoutes:
         assert routes_page.get_card_code() == card_code
 
 
+    def test_add_and_close_button(self):
+        routes_page = UrbanRoutesPage(self.driver)
+        routes_page.add_button_and_close_button()
+
+
     def test_set_message_driver(self):
         routes_page = UrbanRoutesPage(self.driver)
         message_driver = data.message_for_driver
         routes_page.set_message_driver(message_driver)
         assert routes_page.get_message() == message_driver
 
+
     def test_set_blanket_and_tissues(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.set_blanket_and_tissues()
         assert routes_page.driver.find_element(*routes_page.order_a_blanket_and_tissues).is_selecte
+
 
     def test_request_ice_creams(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.request_ice_creams(2)
         assert int(routes_page.driver.find_element(*routes_page.ice_creams).text) == 2
 
+
     def test_search_taxi(self):
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.search_taxi()
         assert routes_page.driver.find_element(*routes_page.search_for_a_taxi).is_displayed()
+
 
     @classmethod
     def teardown_class(cls):
