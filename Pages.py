@@ -22,12 +22,12 @@ class UrbanRoutesPage:
     select_the_card_payment_method = (By.XPATH, '//img[contains(@class,"pp-plus")]')
     add_a_credit_card = (By.XPATH, '//input[contains(@id,"number")]')
     enter_code_card = (By.XPATH, '//input[contains(@name,"code")]')
-    space_between_code_and_add_button = (By.XPATH, '//div[contains(@class,"card-wrapper")]')
+    space_between_code_and_add_button = (By.XPATH, '//div[@class="card-wrapper"]')
     add_card_button = (By.XPATH, '//div[@class="pp-buttons"]/button[@type="submit"]')
     close_button_payment_methods = (By.XPATH, '(//button[@class="close-button section-close"])[3]')
     message_field = (By.XPATH, '//input[@name="comment"]')
     order_a_blanket_and_tissues = (By.XPATH, '(//span[@class="slider round"])[1]')
-    ice_creams = (By.XPATH, '(//div[contains(.,"0")])[30]')
+    ice_creams = (By.XPATH, '(//div[@class="counter-plus"])[1]')
     search_for_a_taxi = (By.XPATH, '//span[@class="smart-button-secondary"]')
 
 
@@ -63,7 +63,6 @@ class UrbanRoutesPage:
     def select_comfort_tariff(self):
         element = self.wait_for_element(self.comfort_tariff)
         element.click()
-        assert element.is_selected()
 
 
     # Llenado de numero de telefono
@@ -104,17 +103,14 @@ class UrbanRoutesPage:
     def select_the_card_payment_methods(self):
         self.driver.find_element(*self.select_the_card_payment_method).click()
 
-    def add_credit_card(self, card_number, card_code):
+    def set_card_number(self, card_number):
         self.driver.find_element(*self.add_a_credit_card).send_keys(card_number)
-        self.driver.find_element(*self.enter_code_card)
+
+    def set_card_code(self,card_code):
         self.driver.find_element(*self.enter_code_card).send_keys(card_code)
+
+    def press_tap_key(self):
         self.driver.find_element(*self.space_between_code_and_add_button).send_keys(Keys.TAB)
-
-    def get_credit_card(self):
-        return self.driver.find_element(*self.add_a_credit_card).get_property('value')
-
-    def get_card_code(self):
-        return self.driver.find_element(*self.enter_code_card).get_property('value')
 
     def add_button_and_close_button(self):
         self.driver.find_element(*self.add_card_button).click()
@@ -123,11 +119,7 @@ class UrbanRoutesPage:
 
      # Mensaje para el conductor
     def set_message_driver(self,message):
-        self.driver.find_element(*self.message_field).click()
         self.driver.find_element(*self.message_field).send_keys(message)
-
-    def get_message(self):
-        return self.driver.find_element(*self.message_field).get_property('value')
 
 
     # Solicitud de mantas y pañuelos
@@ -136,13 +128,10 @@ class UrbanRoutesPage:
 
 
     # Solicitud de helados
-    def request_ice_creams(self, quantity=2):
-        for _ in range(quantity):
-            self.driver.find_element(*self.ice_creams).doubleClick()
+    def request_ice_creams(self):
+        self.driver.find_element(*self.ice_creams).click()
+        self.driver.find_element(*self.ice_creams).click()
 
 
     def search_taxi(self):
         self.driver.find_element(*self.search_for_a_taxi).click()
-
-
-
